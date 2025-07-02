@@ -48,6 +48,24 @@ npm run dev
 
 ---
 
+## Environment variables
+
+This project uses environment variables to configure sensitive or environment-specific settings.
+Create a `.env` file in the root directory by copying the provided `.env.example` file:
+
+```bash
+cp .env.example .env
+```
+
+Then, update the values in `.env` according to your local setup:
+- `DATABASE_URL`: Connection string for the PostgreSQL database
+- `JWT_SECRET`: Secret key used to sign and verify JWT tokens
+- `PORT`: Port on which the server will run (default is 3000)
+
+Environment variables declared in the `.env` file are automatically made available to Prisma.
+
+---
+
 ## API Endpoints
 
 ### Authentication
@@ -67,6 +85,7 @@ Send the token to access protected routes:
 - GET `/tasks` - List all tasks for a user
 - GET `/tasks/:id` - Get a specific task by ID
 - POST `/tasks` - Create a new task
+- PATCH `/tasks/:id` - Partially update a task (example: send `completed: true`)
 - DELETE `/tasks/:id` - Delete a task
 
 You can filter by title using a query param:
