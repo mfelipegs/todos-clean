@@ -5,21 +5,30 @@ const taskRepository = new TaskRepository();
 const taskUseCases = new TaskUseCases(taskRepository);
 
 export class TaskController {
+  constructor(taskUseCases) {
+    this.taskUseCases = taskUseCases;
+  }
+
+
   async create(req, res) {
     try {
-      const task = await taskUseCases.createTask(req.body);
+      const taskData = {
+        title: req.body.title,
+        userId: req.user.userId
+      };
+      const task = await this.taskUseCases.createTask(taskData);
       res.status(201).json(task);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
     }
   }
 
   async list(req, res) {
     try {
-      const tasks = await taskUseCases.listTasks();
+      const tasks = await this.taskUseCases.listTasks(req.user.userId);
       res.json(tasks);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
     }
   }
 

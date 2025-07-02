@@ -9,12 +9,16 @@ export class TaskRepository extends ITaskRepository {
       data: {
         title: taskData.title,
         completed: taskData.completed ?? false,
+        userId: taskData.userId,
       },
     });
   }
 
-  async findAll() {
-    return await prisma.task.findMany();
+
+  async findAll(userId) {
+    return await prisma.task.findMany({
+      where: { userId }
+    });
   }
 
   async delete(id) {

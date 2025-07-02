@@ -1,9 +1,14 @@
 import express from 'express';
 import { TaskController } from '../controllers/taskController.js';
+import { TaskUseCases } from '../../application/usecases/taskUseCases.js';
+import { TaskRepository } from '../repositories/taskRepository.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
-const taskController = new TaskController();
+
+const taskRepository = new TaskRepository();
+const taskUseCases = new TaskUseCases(taskRepository);
+const taskController = new TaskController(taskUseCases);
 
 router.use(authMiddleware);
 

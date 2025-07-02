@@ -1,23 +1,41 @@
 import jwt from 'jsonwebtoken';
-
-const mockUser = {
-  id: '123',
-  username: 'admin',
-  password: '123456' // apenas para fins didáticos
-};
+import bcrypt from 'bcrypt';
+import { UserRepository } from '../repositories/userRepository.js';
 
 export class AuthController {
-  login(req, res) {
+  constructor() {
+    this.userRepository = new UserRepository();
+  }
+
+  async login(req, res) {
     const { username, password } = req.body;
 
-    if (username !== mockUser.username || password !== mockUser.password) {
-      return res.status(401).json({ error: 'User inválido' });
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Username e senha são obrigatórios' });
     }
 
-    const token = jwt.sign({ userId: mockUser.id }, process.env.JWT_SECRET, {
-      expiresIn: '1h'
-    });
+    try {
+      const user = await this.userRepository.findByUsername(username);
 
-    res.json({ token });
+      if (!user) {
+        return res.status(401).json({ error: 'Usuário não encontrado' });
+      }
+
+      const passwordMatch = await bcrypt.compare(password, user.password);
+
+      if (!passwordMatch) {
+        return res.status(401).json({ error: 'Senha incorreta' });
+      }
+
+      const token = jwt.sign(
+        { userId: user.id, username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+
+      res.json({ token });
+    } catch (err) {
+      res.status(500).json({ error: 'Erro interno no servidor' });
+    }
   }
 }

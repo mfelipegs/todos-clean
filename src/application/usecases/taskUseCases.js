@@ -19,8 +19,8 @@ export class TaskUseCases {
     return this.taskRepository.create(taskData);
   }
 
-  async listTasks() {
-    return this.taskRepository.findAll();
+  async listTasks(userId) {
+    return this.taskRepository.findAll(userId);
   }
 
   async deleteTask(id) {
