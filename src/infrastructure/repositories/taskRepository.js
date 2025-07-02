@@ -5,6 +5,9 @@ const prisma = new PrismaClient();
 
 export class TaskRepository extends ITaskRepository {
   async create(taskData) {
+    if (!taskData.userId) {
+      throw new Error('userId is required to create a task');
+    }
     return await prisma.task.create({
       data: {
         title: taskData.title,

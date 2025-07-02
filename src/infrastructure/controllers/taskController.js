@@ -1,5 +1,6 @@
 import { TaskRepository } from '../repositories/taskRepository.js';
 import { TaskUseCases } from '../../application/usecases/taskUseCases.js';
+import { taskSchema } from '../../domain/schemas/taskSchema.js';
 
 const taskRepository = new TaskRepository();
 const taskUseCases = new TaskUseCases(taskRepository);
@@ -12,14 +13,15 @@ export class TaskController {
 
   async create(req, res) {
     try {
-      const taskData = {
-        title: req.body.title,
-        userId: req.user.userId
-      };
-      const task = await this.taskUseCases.createTask(taskData);
-      res.status(201).json(task);
+      const parsed = taskSchema.parse(req.body);
+      const userId = req.user.userId;
+      const result = await this.taskUseCases.createTask({ ...parsed, userId: userId });
+      res.status(201).json(result);
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      if (err.name === 'ZodError') {
+        return res.status(400).json({ error: err.errors.map(e => e.message).join(', ') });
+      }
+      res.status(500).json({ error: err.message });
     }
   }
 

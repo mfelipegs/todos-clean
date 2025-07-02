@@ -16,7 +16,8 @@
     "dotenv": "^17.0.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "prisma": "^6.11.0"
+    "prisma": "^6.11.0",
+    "zod": "^3.25.68"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
