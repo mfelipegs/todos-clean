@@ -25,8 +25,8 @@ export class TaskUseCases {
     return task;
   }
 
-  async listTasks(userId, titleFilter) {
-    return this.taskRepository.findAll(userId, titleFilter);
+  async listTasks(userId, titleFilter, completedFilter) {
+    return this.taskRepository.findAll(userId, titleFilter, completedFilter);
   }
 
   async updateTask(id, userId, updateData) {

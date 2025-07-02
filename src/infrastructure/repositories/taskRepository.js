@@ -23,19 +23,15 @@ export class TaskRepository extends ITaskRepository {
     });
   }
 
-  async findAll(userId, titleFilter) {
-    const whereClause = {
+  async findAll(userId, title, completed) {
+    const filters = {
       userId,
-      ...(titleFilter && {
-        title: {
-          contains: titleFilter,
-          mode: 'insensitive', // opcional: ignora maiúsculas/minúsculas
-        }
-      })
+      ...(title ? { title: { contains: title, mode: 'insensitive' } } : {}),
+      ...(completed !== undefined ? { completed } : {}),
     };
 
     return await prisma.task.findMany({
-      where: whereClause,
+      where: filters,
       orderBy: { createdAt: 'desc' }
     });
   }

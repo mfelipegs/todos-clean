@@ -39,12 +39,13 @@ export class TaskController {
   async list(req, res) {
     try {
       const userId = req.user.userId;
-      const {title} = req.query;
+      const {title, completed} = req.query;
+      const completedFilter = completed === undefined ? undefined : completed === 'true';
 
-      const tasks = await this.taskUseCases.listTasks(userId, title);
+      const tasks = await this.taskUseCases.listTasks(userId, title, completedFilter);
       res.status(200).json(tasks);
     } catch (err) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error: err.message });
     }
   }
 
