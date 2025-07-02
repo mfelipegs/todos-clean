@@ -29,6 +29,15 @@ export class TaskUseCases {
     return this.taskRepository.findAll(userId, titleFilter);
   }
 
+  async updateTask(id, userId, updateData) {
+    const existing = await this.taskRepository.getById(id);
+    if (!existing || existing.userId !== userId) {
+      throw new Error('Task not found or unauthorized');
+    }
+
+    return await this.taskRepository.update(id, updateData);
+  }
+
   async deleteTask(id) {
     return this.taskRepository.delete(id);
   }

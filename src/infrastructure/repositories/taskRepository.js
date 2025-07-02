@@ -40,6 +40,13 @@ export class TaskRepository extends ITaskRepository {
     });
   }
 
+  async update(id, data) {
+    return await prisma.task.update({
+      where: { id },
+      data
+    });
+  }
+
   async delete(id) {
     return await prisma.task.delete({
       where: { id },

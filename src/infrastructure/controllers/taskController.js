@@ -48,6 +48,23 @@ export class TaskController {
     }
   }
 
+  async update(req, res) {
+    try {
+      const { id } = req.params;
+      const parsed = taskSchema.partial().parse(req.body);
+      const userId = req.user.userId;
+
+      const updated = await this.taskUseCases.updateTask(id, userId, parsed);
+      res.status(200).json(updated);
+    } catch (err) {
+      if (err.name === 'ZodError') {
+        return res.status(400).json({ error: err.errors.map(e => e.message).join(', ') });
+      }
+      res.status(500).json({ error: err.message });
+    }
+  }
+
+
   async delete(req, res) {
     try {
       await taskUseCases.deleteTask(req.params.id);
