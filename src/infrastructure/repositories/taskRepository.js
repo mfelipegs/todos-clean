@@ -14,10 +14,26 @@ export class TaskRepository extends ITaskRepository {
     });
   }
 
+  async getById(id) {
+    return await prisma.task.findUnique({
+      where: { id }
+    });
+  }
 
-  async findAll(userId) {
+  async findAll(userId, titleFilter) {
+    const whereClause = {
+      userId,
+      ...(titleFilter && {
+        title: {
+          contains: titleFilter,
+          mode: 'insensitive', // opcional: ignora maiúsculas/minúsculas
+        }
+      })
+    };
+
     return await prisma.task.findMany({
-      where: { userId }
+      where: whereClause,
+      orderBy: { createdAt: 'desc' }
     });
   }
 

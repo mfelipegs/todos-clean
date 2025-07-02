@@ -19,8 +19,14 @@ export class TaskUseCases {
     return this.taskRepository.create(taskData);
   }
 
-  async listTasks(userId) {
-    return this.taskRepository.findAll(userId);
+  async getTask(id) {
+    const task = await this.taskRepository.getById(id);
+    if (!task) throw new Error('Task not found');
+    return task;
+  }
+
+  async listTasks(userId, titleFilter) {
+    return this.taskRepository.findAll(userId, titleFilter);
   }
 
   async deleteTask(id) {

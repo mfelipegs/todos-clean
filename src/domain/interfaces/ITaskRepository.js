@@ -3,7 +3,11 @@ export class ITaskRepository {
     throw new Error('Method not implemented');
   }
 
-  findAll() {
+  getById(id) {
+    throw new Error('Method not implemented');
+  }
+
+  findAll(userId, titleFilter) {
     throw new Error('Method not implemented');
   }
 

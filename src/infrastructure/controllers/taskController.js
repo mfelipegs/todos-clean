@@ -23,12 +23,26 @@ export class TaskController {
     }
   }
 
+  async getById(req, res) {
+    try {
+      const { id } = req.params;
+      const task = await this.taskUseCases.getTask(id);
+      res.status(200).json(task);
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  }
+
+
   async list(req, res) {
     try {
-      const tasks = await this.taskUseCases.listTasks(req.user.userId);
-      res.json(tasks);
+      const userId = req.user.userId;
+      const {title} = req.query;
+
+      const tasks = await this.taskUseCases.listTasks(userId, title);
+      res.status(200).json(tasks);
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(400).json({ error: error.message });
     }
   }
 
