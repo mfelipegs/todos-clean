@@ -1,8 +1,9 @@
 import { PrismaClient } from '@prisma/client';
+import { ITaskRepository } from '../../domain/interfaces/ITaskRepository.js';
 
 const prisma = new PrismaClient();
 
-export class TaskRepository {
+export class TaskRepository extends ITaskRepository {
   async create(taskData) {
     return await prisma.task.create({
       data: {
