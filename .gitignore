@@ -1,0 +1,38 @@
+# Keep environment variables out of version control
+.env
+.env.*
+
+/generated/prisma
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations/
+
+# Prisma client
+@prisma/client/
+
+# Docker
+*.pid
+docker-compose.override.yml
+docker-volume/
+.pgdata/
+
+# Logs
+logs/
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.sw?
+
+# MacOS/Linux/Windows
+.DS_Store
+Thumbs.db
