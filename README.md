@@ -4,6 +4,20 @@ A simple and modular **Task Management API** built with **Node.js**, following *
 
 ---
 
+## Technologies
+
+<p align="left">
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000">
+    <img src="https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white">
+    <img src="https://img.shields.io/badge/Express.js-%23404d59.svg?logo=express&logoColor=%2361DAFB">
+    <img src="https://img.shields.io/badge/Jest-C21325?logo=jest&logoColor=fff">
+    <img src="https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=white">
+    <img src="https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white">
+    <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff">
+</p>
+
+---
+
 ## Requirements
 
 - Node.js 18+
@@ -57,6 +71,8 @@ Send the token to access protected routes:
 
 You can filter by title using a query param:
 `GET /tasks?title=reading`
+
+---
 
 ## Testing
 
