@@ -1,7 +1,14 @@
 import bcrypt from 'bcrypt';
+import { IUserRepository } from '../../domain/interfaces/IUserRepository.js';
 
 export class UserUseCases {
+  /**
+   * @param {IUserRepository} userRepository
+   */
   constructor(userRepository) {
+    if (!(userRepository instanceof IUserRepository)) {
+      throw new Error('userRepository must implement IUserRepository');
+    }
     this.userRepository = userRepository;
   }
 
